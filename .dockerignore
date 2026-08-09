@@ -1,0 +1,8 @@
+**/node_modules
+frontend/dist
+.git
+.gitignore
+*.log
+backend/database/ont_bienes.db-wal
+backend/database/ont_bienes.db-shm
+backend/database/ont_bienes

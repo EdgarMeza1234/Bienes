@@ -1,0 +1,15 @@
+const db = require('better-sqlite3')('./database/ont_bienes.db');
+const s = {};
+s.total = db.prepare('SELECT COUNT(*) as c FROM equipos').get().c;
+s.en_bines = db.prepare("SELECT COUNT(*) as c FROM equipos WHERE status='en_bines'").get().c;
+s.despachada = db.prepare("SELECT COUNT(*) as c FROM equipos WHERE status='despachada'").get().c;
+s.instalada = db.prepare("SELECT COUNT(*) as c FROM equipos WHERE status='instalada'").get().c;
+s.devuelta = db.prepare("SELECT COUNT(*) as c FROM equipos WHERE status='devuelta'").get().c;
+s.mal = db.prepare("SELECT COUNT(*) as c FROM equipos WHERE status='en_bines_mal_estado'").get().c;
+s.abonados = db.prepare('SELECT COUNT(*) as c FROM abonados').get().c;
+s.instalaciones = db.prepare('SELECT COUNT(*) as c FROM instalaciones').get().c;
+s.vales = db.prepare('SELECT COUNT(*) as c FROM vales').get().c;
+const byStatus = db.prepare('SELECT status, COUNT(*) as c FROM equipos GROUP BY status ORDER BY c DESC').all();
+console.log('Stats:', JSON.stringify(s, null, 2));
+console.log('ByStatus:', JSON.stringify(byStatus));
+db.close();

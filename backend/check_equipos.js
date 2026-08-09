@@ -1,0 +1,12 @@
+const Database = require('better-sqlite3');
+const db = new Database('D:\\Bienes\\ont-bienes\\backend\\database\\ont_bienes.db');
+const rows = db.prepare("SELECT asset_code, description, modelo, fsan, mac_address FROM equipos WHERE modelo != '' LIMIT 5").all();
+console.log(JSON.stringify(rows, null, 2));
+console.log('---');
+const withDesc = db.prepare("SELECT COUNT(*) as c FROM equipos WHERE description != ''").get();
+const withModelo = db.prepare("SELECT COUNT(*) as c FROM equipos WHERE modelo != ''").get();
+const total = db.prepare("SELECT COUNT(*) as c FROM equipos").get();
+console.log('Con descripcion:', withDesc.c, 'de', total.c);
+console.log('Con modelo:', withModelo.c, 'de', total.c);
+console.log('Sin modelo ni descripcion:', total.c - withDesc.c, 'de', total.c);
+db.close();
